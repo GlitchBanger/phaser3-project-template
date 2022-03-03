@@ -9,12 +9,9 @@ import antena from './assets/AntenaLeftoff.png';
 import antenaon from './assets/AntenaLefton.png';
 
 //game variables needs to change while transfering to another file
-let ORBot;
-let cursor;
-let Wire;
-let Gap;
-let Antena;
-let ORBotShow = true;
+let gameState = {
+    ORBotShow : true
+}
 
 class Level1 extends Phaser.Scene
 {
@@ -39,10 +36,10 @@ class Level1 extends Phaser.Scene
     {
         const background = this.add.rectangle(400, 300, 750, 575, 0xffffff);
 
-        ORBot = this.physics.add.sprite(400, 300, 'ORBot');
-        Wire = this.physics.add.staticSprite(400, 50, 'Wire1');
-        Gap = this.physics.add.staticSprite(393, 50, 'Gap');
-        Antena = this.physics.add.staticSprite(616, 50, 'Antena');
+        gameState.ORBot = this.physics.add.sprite(400, 300, 'ORBot');
+        gameState.Wire = this.physics.add.staticSprite(400, 50, 'Wire1');
+        gameState.Gap = this.physics.add.staticSprite(393, 50, 'Gap');
+        gameState.Antena = this.physics.add.staticSprite(616, 50, 'Antena');
 
         this.anims.create({
             key: 'idle',
@@ -89,57 +86,57 @@ class Level1 extends Phaser.Scene
             repeat: -1
         });
 
-        ORBot.setCollideWorldBounds();
+        gameState.ORBot.setCollideWorldBounds();
 
-        this.physics.add.collider(ORBot, Antena);
-        this.physics.add.collider(ORBot, Gap, () => {
-            ORBotShow = false;
-            ORBot.destroy(true);
-            Wire.setTexture('Wire2');
-            Gap.setTexture('ORononon');
-            Antena.setTexture('AntenaOn');
+        this.physics.add.collider(gameState.ORBot, gameState.Antena);
+        this.physics.add.collider(gameState.ORBot, gameState.Gap, () => {
+            gameState.ORBotShow = false;
+            gameState.ORBot.destroy(true);
+            gameState.Wire.setTexture('Wire2');
+            gameState.Gap.setTexture('ORononon');
+            gameState.Antena.setTexture('AntenaOn');
         });
 
-        cursor = this.input.keyboard.createCursorKeys();
+        gameState.cursor = this.input.keyboard.createCursorKeys();
     }
 
     update() 
     {
-        if(ORBotShow)
+        if(gameState.ORBotShow)
         {
-            if(cursor.up.isDown) 
+            if(gameState.cursor.up.isDown) 
             {
-                ORBot.setVelocityY(-150);
-                ORBot.setVelocityX(0);
-                ORBot.play('upward', true);
+                gameState.ORBot.setVelocityY(-150);
+                gameState.ORBot.setVelocityX(0);
+                gameState.ORBot.play('upward', true);
             } 
             
-            else if (cursor.down.isDown) 
+            else if (gameState.cursor.down.isDown) 
             {
-                ORBot.setVelocityY(150);
-                ORBot.setVelocityX(0);
-                ORBot.play('downward', true);
+                gameState.ORBot.setVelocityY(150);
+                gameState.ORBot.setVelocityX(0);
+                gameState.ORBot.play('downward', true);
             } 
 
-            else if (cursor.left.isDown)
+            else if (gameState.cursor.left.isDown)
             {
-                ORBot.setVelocityX(-150);
-                ORBot.setVelocityY(0);
-                ORBot.play('leftward', true);
+                gameState.ORBot.setVelocityX(-150);
+                gameState.ORBot.setVelocityY(0);
+                gameState.ORBot.play('leftward', true);
             }
 
-            else if (cursor.right.isDown)
+            else if (gameState.cursor.right.isDown)
             {
-                ORBot.setVelocityX(150);
-                ORBot.setVelocityY(0);
-                ORBot.play('rightward', true);
+                gameState.ORBot.setVelocityX(150);
+                gameState.ORBot.setVelocityY(0);
+                gameState.ORBot.play('rightward', true);
             }
 
             else
             {
-                ORBot.setVelocityX(0);
-                ORBot.setVelocityY(0);
-                ORBot.play('idle', true);
+                gameState.ORBot.setVelocityX(0);
+                gameState.ORBot.setVelocityY(0);
+                gameState.ORBot.play('idle', true);
             }
         }
     }
