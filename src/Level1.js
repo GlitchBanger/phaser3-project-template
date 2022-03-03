@@ -145,3 +145,5 @@ class Level1 extends Phaser.Scene
     }
 }
  // Add export
+
+ export { Level1 };
